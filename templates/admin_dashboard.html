@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - AUTOSAT{% endblock %}
+{% block content %}
+<nav class="bg-[#0B0C10]/80 backdrop-blur-lg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <span class="text-xl font-bold">AUTOSAT <span class="text-gold">Admin</span></span>
+        <a href="/admin/logout" class="text-gray-300 hover:text-gold">Logout</a>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div class="text-2xl font-bold text-gold" id="statTotal">0</div>
+            <div class="text-gray-400">Total Vehicles</div>
+        </div>
+        <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div class="text-2xl font-bold text-gold" id="statSale">0</div>
+            <div class="text-gray-400">For Sale</div>
+        </div>
+        <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div class="text-2xl font-bold text-gold" id="statRent">0</div>
+            <div class="text-gray-400">For Rent</div>
+        </div>
+        <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+            <div class="text-2xl font-bold text-gold" id="statFeatured">0</div>
+            <div class="text-gray-400">Featured</div>
+        </div>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Inventory</h2>
+        <a href="/admin/new" class="bg-gold text-black px-4 py-2 rounded-lg font-semibold">+ Add Vehicle</a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-white/5">
+                <tr>
+                    <th class="px-4 py-3">Title</th>
+                    <th class="px-4 py-3">Brand</th>
+                    <th class="px-4 py-3">Price</th>
+                    <th class="px-4 py-3">Type</th>
+                    <th class="px-4 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="adminVehicleTable">
+                <!-- populated by JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
