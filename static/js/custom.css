@@ -1,0 +1,10 @@
+.text-gold { color: #D4AF37; }
+.bg-gold { background-color: #D4AF37; }
+.border-gold { border-color: #D4AF37; }
+.glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+}
+.glass:hover { background: rgba(255,255,255,0.1); }
