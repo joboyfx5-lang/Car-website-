@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Add Vehicle - AUTOSAT{% endblock %}
+
+{% block content %}
+<nav class="bg-[#0B0C10]/80 border-b border-white/10 p-4">
+    <a href="/admin/dashboard" class="text-gold">Back to Dashboard</a>
+</nav>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Add Vehicle</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" name="title" placeholder="Title" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <input type="text" name="brand" placeholder="Brand" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <input type="text" name="model" placeholder="Model" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <input type="number" name="year" placeholder="Year" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <input type="number" name="price" placeholder="Price (₦)" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <select name="condition" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
+                <option value="Brand New">Brand New</option>
+                <option value="Tokunbo">Tokunbo</option>
+                <option value="Nigerian Used">Nigerian Used</option>
+            </select>
+            <select name="listing_type" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
+                <option value="Sale">For Sale</option>
+                <option value="Rent">For Rent</option>
+            </select>
+            <select name="body_style" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Coupe">Coupe</option>
+            </select>
+            <select name="drive_type" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
+                <option value="AWD">AWD</option>
+                <option value="RWD">RWD</option>
+                <option value="FWD">FWD</option>
+            </select>
+            <input type="text" name="transmission" placeholder="Transmission" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+            <input type="text" name="mileage" placeholder="Mileage" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+        </div>
+
+        <textarea name="description" placeholder="Description" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white"></textarea>
+
+        <div class="space-y-2">
+            <label class="block text-sm text-gray-400">Primary Image URL</label>
+            <input type="text" name="primary_image_url" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+
+            <label class="block text-sm text-gray-400">Additional Image URLs (comma-separated)</label>
+            <input type="text" name="image_urls" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+
+            <label class="block text-sm text-gray-400">Upload Images</label>
+            <input type="file" name="images" multiple class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+        </div>
+
+        <label class="flex items-center space-x-2">
+            <input type="checkbox" name="featured" class="bg-white/5 border border-white/10 rounded">
+            <span>Featured</span>
+        </label>
+
+        <button class="w-full bg-gold text-black font-bold py-3 rounded-lg">Save Vehicle</button>
+    </form>
+</div>
+{% endblock %}
