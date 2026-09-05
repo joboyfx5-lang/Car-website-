@@ -1,63 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Edit Vehicle - AUTOSAT{% endblock %}
-
 {% block content %}
-<nav class="bg-[#0B0C10]/80 border-b border-white/10 p-4">
-    <a href="/admin/dashboard" class="text-gold">Back to Dashboard</a>
-</nav>
-
-<div class="max-w-3xl mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Edit Vehicle</h1>
-
-    <form method="POST" enctype="multipart/form-data" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" name="title" placeholder="Title" value="{{ vehicle.title }}" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <input type="text" name="brand" placeholder="Brand" value="{{ vehicle.brand }}" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <input type="text" name="model" placeholder="Model" value="{{ vehicle.model }}" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <input type="number" name="year" placeholder="Year" value="{{ vehicle.year }}" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <input type="number" name="price" placeholder="Price (₦)" value="{{ vehicle.price }}" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <select name="condition" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-                <option value="Brand New" {% if vehicle.condition == 'Brand New' %}selected{% endif %}>Brand New</option>
-                <option value="Tokunbo" {% if vehicle.condition == 'Tokunbo' %}selected{% endif %}>Tokunbo</option>
-                <option value="Nigerian Used" {% if vehicle.condition == 'Nigerian Used' %}selected{% endif %}>Nigerian Used</option>
-            </select>
-            <select name="listing_type" required class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-                <option value="Sale" {% if vehicle.listing_type == 'Sale' %}selected{% endif %}>For Sale</option>
-                <option value="Rent" {% if vehicle.listing_type == 'Rent' %}selected{% endif %}>For Rent</option>
-            </select>
-            <select name="body_style" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-                <option value="Sedan" {% if vehicle.body_style == 'Sedan' %}selected{% endif %}>Sedan</option>
-                <option value="SUV" {% if vehicle.body_style == 'SUV' %}selected{% endif %}>SUV</option>
-                <option value="Coupe" {% if vehicle.body_style == 'Coupe' %}selected{% endif %}>Coupe</option>
-            </select>
-            <select name="drive_type" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-                <option value="AWD" {% if vehicle.drive_type == 'AWD' %}selected{% endif %}>AWD</option>
-                <option value="RWD" {% if vehicle.drive_type == 'RWD' %}selected{% endif %}>RWD</option>
-                <option value="FWD" {% if vehicle.drive_type == 'FWD' %}selected{% endif %}>FWD</option>
-            </select>
-            <input type="text" name="transmission" placeholder="Transmission" value="{{ vehicle.transmission or '' }}" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-            <input type="text" name="mileage" placeholder="Mileage" value="{{ vehicle.mileage or '' }}" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-        </div>
-
-        <textarea name="description" placeholder="Description" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">{{ vehicle.description or '' }}</textarea>
-
-        <div class="space-y-2">
-            <label class="block text-sm text-gray-400">Primary Image URL</label>
-            <input type="text" name="primary_image_url" value="{{ vehicle.primary_image or '' }}" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-
-            <label class="block text-sm text-gray-400">Additional Image URLs (comma-separated)</label>
-            <input type="text" name="image_urls" value="{{ vehicle.image_paths or '' }}" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-
-            <label class="block text-sm text-gray-400">Upload More Images</label>
-            <input type="file" name="images" multiple class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-        </div>
-
-        <label class="flex items-center space-x-2">
-            <input type="checkbox" name="featured" {% if vehicle.featured %}checked{% endif %} class="bg-white/5 border border-white/10 rounded">
-            <span>Featured</span>
-        </label>
-
-        <button class="w-full bg-gold text-black font-bold py-3 rounded-lg">Update Vehicle</button>
+<header class="admin-header">
+    <div class="container">
+        <a href="/admin/dashboard">Back</a>
+        <h1>Edit Vehicle</h1>
+    </div>
+</header>
+<div class="admin-form container">
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" value="{{ vehicle.title }}" required>
+        <input type="text" name="brand" value="{{ vehicle.brand }}" required>
+        <input type="text" name="model" value="{{ vehicle.model }}" required>
+        <input type="number" name="year" value="{{ vehicle.year }}" required>
+        <input type="number" name="price" value="{{ vehicle.price }}" required>
+        <select name="condition" required>
+            {% for c in ['Brand New', 'Tokunbo', 'Nigerian Used'] %}
+                <option {% if vehicle.condition == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        <select name="listing_type" required>
+            {% for lt in ['Sale', 'Rent'] %}
+                <option {% if vehicle.listing_type == lt %}selected{% endif %}>{{ lt }}</option>
+            {% endfor %}
+        </select>
+        <select name="body_style">
+            {% for bs in ['Sedan', 'SUV', 'Coupe'] %}
+                <option {% if vehicle.body_style == bs %}selected{% endif %}>{{ bs }}</option>
+            {% endfor %}
+        </select>
+        <select name="drive_type">
+            {% for dt in ['AWD', 'RWD', 'FWD'] %}
+                <option {% if vehicle.drive_type == dt %}selected{% endif %}>{{ dt }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="transmission" value="{{ vehicle.transmission or '' }}">
+        <input type="text" name="mileage" value="{{ vehicle.mileage or '' }}">
+        <textarea name="description">{{ vehicle.description or '' }}</textarea>
+        <input type="text" name="primary_image_url" value="{{ vehicle.primary_image or '' }}">
+        <input type="text" name="image_urls" value="{{ vehicle.image_paths or '' }}">
+        <input type="file" name="images" multiple>
+        <label><input type="checkbox" name="featured" {% if vehicle.featured %}checked{% endif %}> Featured</label>
+        <label><input type="checkbox" name="customs_verified" {% if vehicle.customs_verified %}checked{% endif %}> Customs Verified</label>
+        <input type="number" name="inspection_score" value="{{ vehicle.inspection_score or '' }}" placeholder="Inspection Score">
+        <input type="text" name="inspection_report_url" value="{{ vehicle.inspection_report_url or '' }}" placeholder="Inspection Report URL">
+        <button type="submit">Update Vehicle</button>
     </form>
 </div>
 {% endblock %}
