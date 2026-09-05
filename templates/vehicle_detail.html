@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ vehicle.title }} - AUTOSAT{% endblock %}
+{% block content %}
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="/" class="logo">
+            <img src="https://i.postimg.cc/FFkqTd0m/IMG-0895.jpg" alt="AUTOSAT">
+            <span>AUTOSAT</span>
+        </a>
+        <a href="/" class="back-link">← Back</a>
+    </div>
+</header>
+
+<section class="vehicle-detail container">
+    <div class="vdp-main">
+        <div class="vdp-gallery">
+            <img src="{{ vehicle.get_primary() }}" alt="{{ vehicle.title }}" class="main-image">
+            <div class="thumbnails">
+                {% for img in vehicle.get_images() %}
+                    <img src="{{ img }}" alt="{{ vehicle.title }}">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="vdp-info">
+            <h1>{{ vehicle.title }}</h1>
+            <div class="specs">
+                <span>{{ vehicle.year }}</span>
+                <span>{{ vehicle.mileage or 'N/A' }}</span>
+                <span>{{ vehicle.transmission or 'N/A' }}</span>
+                <span>{{ vehicle.drive_type or 'N/A' }}</span>
+            </div>
+            <p class="price">₦{{ "{:,}".format(vehicle.price) }}</p>
+            {% if vehicle.customs_verified %}
+                <span class="badge duty-paid">Duty Paid ✅</span>
+            {% endif %}
+            {% if vehicle.inspection_score %}
+                <span class="badge inspection">Inspection Score: {{ vehicle.inspection_score }}/150</span>
+            {% endif %}
+            <p class="description">{{ vehicle.description or '' }}</p>
+            <div class="actions">
+                <a href="https://wa.me/2348183533837?text={{ 'I am interested in ' + vehicle.title + ' (' + vehicle.year|string + ') priced at ₦' + '{:,}'.format(vehicle.price) + '. Listing ID: ' + vehicle.id|string }}"
+                   class="btn btn-whatsapp" target="_blank"
+                   onclick="trackLead({{ vehicle.id }})">Chat on WhatsApp</a>
+                <button class="btn btn-calculator" onclick="showCalculator()">Loan Calculator</button>
+            </div>
+        </div>
+    </div>
+    <div class="vdp-extras">
+        <h3>Specifications</h3>
+        <ul>
+            <li><strong>Brand:</strong> {{ vehicle.brand }}</li>
+            <li><strong>Model:</strong> {{ vehicle.model }}</li>
+            <li><strong>Condition:</strong> {{ vehicle.condition }}</li>
+            <li><strong>Listing Type:</strong> {{ vehicle.listing_type }}</li>
+            <li><strong>Body Style:</strong> {{ vehicle.body_style or 'N/A' }}</li>
+            <li><strong>Drive Type:</strong> {{ vehicle.drive_type or 'N/A' }}</li>
+        </ul>
+        <h3>Inspection Report</h3>
+        {% if vehicle.inspection_report_url %}
+            <a href="{{ vehicle.inspection_report_url }}" target="_blank">Download Report</a>
+        {% else %}
+            <p>No inspection report available.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Loan Calculator Modal -->
+<div id="calculatorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideCalculator()">&times;</span>
+        <h2>Loan Calculator</h2>
+        <label>Down Payment (₦): <input type="number" id="downPayment" value="0"></label>
+        <label>Interest Rate (%): <input type="number" id="interestRate" value="15"></label>
+        <label>Loan Term (months): <input type="number" id="loanTerm" value="60"></label>
+        <button onclick="calculateLoan({{ vehicle.price }})">Calculate</button>
+        <div id="loanResult"></div>
+    </div>
+</div>
+{% endblock %}
