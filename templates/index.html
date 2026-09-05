@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUTOSAT | Lagos' Premier Auto Broker</title>
-    <!-- Tailwind CSS CDN (Instant styling, no build setup needed) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,9 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        brandDark: '#0B0F17',
-                        cardDark: '#161F30',
-                        accentCyan: '#06B6D4',
+                        brandDark: '#0B0E14',
+                        cardDark: '#141A23',
+                        champagneGold: '#D4AF37',
+                        champagneLight: '#E5C158',
                         accentEmerald: '#10B981',
                     }
                 }
@@ -30,15 +31,17 @@
 <body class="bg-brandDark text-slate-100 min-h-screen flex flex-col antialiased">
 
     <!-- TOP NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-brandDark/80 backdrop-blur-md border-b border-slate-800">
+    <header class="sticky top-0 z-50 bg-brandDark/90 backdrop-blur-md border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-2">
-                <span class="text-2xl font-black tracking-widest text-white uppercase">AUTO<span class="text-accentCyan">SAT</span></span>
+            <!-- Correctly Scaled Corner Logo -->
+            <a href="#" class="flex items-center">
+                <img src="https://i.postimg.cc/6TL7YH6G/autosat.png" 
+                     alt="AUTOSAT Logo" 
+                     class="h-10 sm:h-12 w-auto object-contain">
             </a>
             
-            <!-- Quick Contact Badge -->
-            <a href="https://wa.me/2348000000000?text=Hello%20AUTOSAT,%20I%20want%20to%20inquire%20about%20your%20inventory." 
+            <!-- WhatsApp Action Button -->
+            <a href="https://wa.me/2348000000000?text=Hello%20AUTOSAT,%20I%20want%20to%20inquire%20about%20your%20vehicle%20inventory." 
                target="_blank" 
                class="inline-flex items-center gap-2 bg-accentEmerald hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2.5 rounded-full transition-all shadow-lg shadow-emerald-950/50">
                 <span>Chat on WhatsApp</span>
@@ -48,121 +51,179 @@
 
     <!-- HERO & SEARCH SECTION -->
     <main class="flex-1">
-        <section class="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
-                <span class="text-xs font-semibold uppercase tracking-widest text-accentCyan bg-cyan-950/50 border border-cyan-800/50 px-3 py-1 rounded-full">
+        <section class="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <span class="text-[11px] font-semibold uppercase tracking-widest text-champagneGold bg-amber-950/40 border border-amber-800/40 px-3 py-1 rounded-full">
                     Direct Tokunbo & Verified Cars
                 </span>
                 <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 tracking-tight leading-tight">
                     Lagos' Premier Auto Broker
                 </h1>
-                <p class="text-slate-400 text-sm sm:text-base mt-3">
+                <p class="text-slate-400 text-xs sm:text-sm mt-3">
                     Sourcing luxury vehicles you can trust. Fully verified Customs papers & 150-point inspection.
                 </p>
-                <p class="text-xs text-slate-500 mt-1 flex items-center justify-center gap-1">
-                    📍 Showroom: 24 Unity Rd, Ikeja, Lagos
+                <p class="text-xs text-slate-500 mt-1.5 flex items-center justify-center gap-1">
+                    📍 Showroom: 24 Unity Rd, Ikeja, Lagos State
                 </p>
             </div>
 
             <!-- MULTI-FILTER SEARCH BOX -->
-            <div class="bg-cardDark/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-xl max-w-4xl mx-auto">
-                <!-- Brand Quick Filters -->
-                <div class="flex flex-wrap gap-2 mb-6 justify-center">
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-accentCyan text-slate-950">All Brands</button>
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Lexus</button>
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Mercedes-Benz</button>
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Toyota</button>
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">BMW</button>
-                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">Land Rover</button>
+            <div class="bg-cardDark border border-slate-800/80 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-xl max-w-4xl mx-auto">
+                <!-- Expanded Realistic Car Brands Bar -->
+                <div class="flex flex-wrap gap-2 mb-5 justify-center">
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-champagneGold text-slate-950">All Brands</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Toyota</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Lexus</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Mercedes-Benz</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Honda</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">BMW</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Land Rover</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Hyundai</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Kia</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Audi</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Ford</button>
+                    <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-champagneGold text-slate-300">Porsche</button>
                 </div>
 
-                <!-- Dropdowns Grid -->
+                <!-- Search Dropdowns -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <select class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 focus:ring-1 focus:ring-accentCyan outline-none">
+                    <select class="bg-slate-900/90 border border-slate-700/80 text-slate-200 text-xs rounded-xl p-3 outline-none focus:border-champagneGold">
                         <option>Condition (All)</option>
                         <option>Foreign Used (Tokunbo)</option>
                         <option>Nigerian Used</option>
                         <option>Brand New</option>
                     </select>
 
-                    <select class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 focus:ring-1 focus:ring-accentCyan outline-none">
+                    <select class="bg-slate-900/90 border border-slate-700/80 text-slate-200 text-xs rounded-xl p-3 outline-none focus:border-champagneGold">
                         <option>Body Style</option>
                         <option>Sedan</option>
                         <option>SUV</option>
                         <option>Coupe</option>
+                        <option>Truck</option>
                     </select>
 
-                    <select class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl p-3 focus:ring-1 focus:ring-accentCyan outline-none">
+                    <select class="bg-slate-900/90 border border-slate-700/80 text-slate-200 text-xs rounded-xl p-3 outline-none focus:border-champagneGold">
                         <option>Drive Type</option>
                         <option>AWD</option>
                         <option>RWD</option>
                         <option>FWD</option>
+                        <option>4WD</option>
                     </select>
 
-                    <button class="col-span-2 sm:col-span-1 bg-accentCyan hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-xl p-3 transition-all">
+                    <button class="col-span-2 sm:col-span-1 bg-champagneGold hover:bg-champagneLight text-slate-950 font-bold text-xs rounded-xl p-3 transition-all shadow-lg shadow-amber-950/20">
                         Search Inventory
                     </button>
                 </div>
             </div>
         </section>
 
+        <!-- TRUST & CLIENT DELIVERIES SECTION (NEW) -->
+        <section class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <h2 class="text-xl font-bold text-white border-b-2 border-champagneGold inline-block pb-1">
+                    Verified Deliveries & Key Handovers
+                </h2>
+                <p class="text-xs text-slate-400 mt-2">
+                    Every vehicle delivered directly to our clients with zero hassle & complete documentation.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-cardDark border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=800&q=80" 
+                         alt="Car key handover deal" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-3 text-center">
+                        <p class="text-xs font-bold text-slate-200">Key Handover & Title Transfer</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">100% Genuine Customs Papers Verified</p>
+                    </div>
+                </div>
+
+                <div class="bg-cardDark border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80" 
+                         alt="Client delivery in showroom" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-3 text-center">
+                        <p class="text-xs font-bold text-slate-200">Showroom Inspection & Delivery</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Physical Inspection at Ikeja Showroom</p>
+                    </div>
+                </div>
+
+                <div class="bg-cardDark border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80" 
+                         alt="Client handshake deal closed" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-3 text-center">
+                        <p class="text-xs font-bold text-slate-200">Verified Auto Broker Deal</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Transparent Pricing & Direct Tokunbo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- AVAILABLE VEHICLES INVENTORY -->
-        <section class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <h2 class="text-xl font-bold text-white mb-6 border-l-4 border-accentCyan pl-3">
+        <section class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <h2 class="text-xl font-bold text-white mb-6 border-l-4 border-champagneGold pl-3">
                 Available Vehicles
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Vehicle Card 1 -->
-                <div class="bg-cardDark border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col">
+                <!-- Vehicle Card 1: 2015 Lexus IS 350 F Sport -->
+                <div class="bg-cardDark border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col group">
                     <div class="relative h-48 bg-slate-950 flex items-center justify-center overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80" 
-                             alt="Lexus IS 350" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-slate-900/90 text-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-700">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" 
+                             alt="2015 Lexus IS 350 F Sport" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-slate-950/90 text-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-700">
                             Foreign Used (Tokunbo)
                         </span>
-                        <span class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <span class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-md">
                             ✓ Duty Paid
                         </span>
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-base font-bold text-white">2015 Lexus IS 350 F Sport AWD</h3>
-                            <p class="text-xl font-extrabold text-accentCyan mt-1">₦18,500,000</p>
+                            <h3 class="text-base font-bold text-white group-hover:text-champagneGold transition-colors">
+                                2015 Lexus IS 350 F Sport AWD
+                            </h3>
+                            <p class="text-xl font-extrabold text-champagneGold mt-1">₦18,500,000</p>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
+                        <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
                             <span class="text-xs text-slate-400">Mileage: 68,000 km</span>
                             <a href="https://wa.me/2348000000000?text=Hi%20AUTOSAT,%20I%20am%20interested%20in%20the%202015%20Lexus%20IS%20350%20F%20Sport%20(₦18,500,000)." 
                                target="_blank"
-                               class="bg-accentEmerald hover:bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all">
+                               class="bg-accentEmerald hover:bg-emerald-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-md">
                                 Chat on WhatsApp
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Vehicle Card 2 -->
-                <div class="bg-cardDark border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col">
+                <!-- Vehicle Card 2: 2019 Mercedes-Benz GLC 300 Coupe -->
+                <div class="bg-cardDark border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col group">
                     <div class="relative h-48 bg-slate-950 flex items-center justify-center overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80" 
-                             alt="Mercedes GLC 300" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-slate-900/90 text-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-700">
+                             alt="Mercedes-Benz GLC 300 Coupe" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-slate-950/90 text-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-700">
                             Foreign Used (Tokunbo)
                         </span>
-                        <span class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <span class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-md">
                             ✓ Duty Paid
                         </span>
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-base font-bold text-white">2019 Mercedes-Benz GLC 300 Coupe</h3>
-                            <p class="text-xl font-extrabold text-accentCyan mt-1">₦38,000,000</p>
+                            <h3 class="text-base font-bold text-white group-hover:text-champagneGold transition-colors">
+                                2019 Mercedes-Benz GLC 300 Coupe
+                            </h3>
+                            <p class="text-xl font-extrabold text-champagneGold mt-1">₦38,000,000</p>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
+                        <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
                             <span class="text-xs text-slate-400">Mileage: 42,000 km</span>
                             <a href="https://wa.me/2348000000000?text=Hi%20AUTOSAT,%20I%20am%20interested%20in%20the%202019%20Mercedes%20GLC%20300%20(₦38,000,000)." 
                                target="_blank"
-                               class="bg-accentEmerald hover:bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl transition-all">
+                               class="bg-accentEmerald hover:bg-emerald-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-md">
                                 Chat on WhatsApp
                             </a>
                         </div>
@@ -173,9 +234,9 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-slate-800 bg-brandDark py-8 text-center text-xs text-slate-500">
+    <footer class="border-t border-slate-800/80 bg-brandDark py-8 text-center text-xs text-slate-500">
         <p>© 2026 AUTOSAT. All rights reserved.</p>
-        <p class="mt-1">📍 24 Unity Rd, Ikeja, Lagos State</p>
+        <p class="mt-1">📍 Showroom Experience Center: 24 Unity Rd, Ikeja, Lagos State</p>
     </footer>
 
 </body>
