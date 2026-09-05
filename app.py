@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from werkzeug.utils import secure_filename
 from functools import wraps
-from models import db, Vehicle
+from models import db, Vehicle, Lead
 from seed_data import seed_vehicles
 from dotenv import load_dotenv
 
@@ -13,10 +13,9 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///autosat.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 db.init_app(app)
-
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'autosat123')
@@ -33,6 +32,11 @@ def admin_required(f):
 def index():
     brands = ['All Brands', 'Lexus', 'Mercedes-Benz', 'Toyota', 'BMW', 'Land Rover']
     return render_template('index.html', brands=brands)
+
+@app.route('/vehicle/<int:vehicle_id>')
+def vehicle_detail(vehicle_id):
+    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    return render_template('vehicle_detail.html', vehicle=vehicle)
 
 @app.route('/api/vehicles')
 def api_vehicles():
@@ -94,9 +98,25 @@ def api_vehicles():
             'description': v.description,
             'primary_image': v.get_primary(),
             'images': v.get_images(),
-            'featured': v.featured
+            'featured': v.featured,
+            'customs_verified': v.customs_verified,
+            'inspection_score': v.inspection_score,
+            'inspection_report_url': v.inspection_report_url
         })
     return jsonify(result)
+
+@app.route('/track-lead', methods=['POST'])
+def track_lead():
+    data = request.get_json()
+    vehicle_id = data.get('vehicle_id')
+    name = data.get('name', '')
+    phone = data.get('phone', '')
+    source = data.get('source', 'whatsapp')
+    if vehicle_id:
+        lead = Lead(vehicle_id=vehicle_id, name=name, phone=phone, source=source)
+        db.session.add(lead)
+        db.session.commit()
+    return jsonify({'success': True})
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin_login():
@@ -125,7 +145,8 @@ def admin_stats():
     sale = Vehicle.query.filter_by(listing_type='Sale').count()
     rent = Vehicle.query.filter_by(listing_type='Rent').count()
     featured = Vehicle.query.filter_by(featured=True).count()
-    return jsonify({'total': total, 'sale': sale, 'rent': rent, 'featured': featured})
+    leads = Lead.query.count()
+    return jsonify({'total': total, 'sale': sale, 'rent': rent, 'featured': featured, 'leads': leads})
 
 @app.route('/admin/new', methods=['GET', 'POST'])
 @admin_required
@@ -144,11 +165,13 @@ def admin_new():
         mileage = request.form.get('mileage')
         description = request.form.get('description')
         featured = 'featured' in request.form
+        customs_verified = 'customs_verified' in request.form
+        inspection_score = int(request.form.get('inspection_score', 0)) if request.form.get('inspection_score') else None
+        inspection_report_url = request.form.get('inspection_report_url', '')
 
         primary_image = None
         image_paths = []
 
-        # Handle file uploads
         files = request.files.getlist('images')
         for i, file in enumerate(files):
             if file and file.filename:
@@ -159,7 +182,6 @@ def admin_new():
                 else:
                     image_paths.append(filename)
 
-        # Handle URL fields
         url_primary = request.form.get('primary_image_url')
         url_extra = request.form.get('image_urls')
         if url_primary and not primary_image:
@@ -172,7 +194,9 @@ def admin_new():
             condition=condition, listing_type=listing_type, body_style=body_style,
             drive_type=drive_type, transmission=transmission, mileage=mileage,
             description=description, primary_image=primary_image,
-            image_paths=','.join(image_paths), featured=featured
+            image_paths=','.join(image_paths), featured=featured,
+            customs_verified=customs_verified, inspection_score=inspection_score,
+            inspection_report_url=inspection_report_url
         )
         db.session.add(vehicle)
         db.session.commit()
@@ -198,8 +222,11 @@ def admin_edit(vehicle_id):
         vehicle.mileage = request.form.get('mileage')
         vehicle.description = request.form.get('description')
         vehicle.featured = 'featured' in request.form
+        vehicle.customs_verified = 'customs_verified' in request.form
+        inspection_score = request.form.get('inspection_score')
+        vehicle.inspection_score = int(inspection_score) if inspection_score else None
+        vehicle.inspection_report_url = request.form.get('inspection_report_url', '')
 
-        # Update images
         files = request.files.getlist('images')
         if files and files[0].filename:
             for file in files:
