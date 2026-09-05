@@ -25,17 +25,16 @@ async function fetchVehicles() {
     grid.innerHTML = '';
     vehicles.forEach(v => {
         const card = document.createElement('div');
-        card.className = 'bg-white/5 border border-white/10 rounded-xl overflow-hidden';
+        card.className = 'vehicle-card';
         card.innerHTML = `
-            <div class="relative h-48 bg-gray-800">
-                <img src="${v.primary_image || ''}" class="w-full h-full object-cover">
-                ${v.featured ? '<span class="absolute top-2 left-2 bg-gold text-black px-2 py-1 rounded-full text-xs font-bold">Featured</span>' : ''}
-            </div>
-            <div class="p-4">
-                <h3 class="font-bold">${v.title}</h3>
-                <div class="text-sm text-gray-400">${v.year} • ${v.mileage} • ${v.transmission} • ${v.drive_type}</div>
-                <div class="text-gold font-bold text-lg mt-2">₦${v.price.toLocaleString()}</div>
-                <a href="https://wa.me/2348183533837?text=${encodeURIComponent(`I'm interested in ${v.title} (${v.year}) priced at ₦${v.price.toLocaleString()}`)}" target="_blank" class="mt-3 block text-center bg-gold text-black py-2 rounded-lg font-semibold">WhatsApp</a>
+            <img src="${v.primary_image || ''}" alt="${v.title}">
+            <div class="body">
+                <h3>${v.title}</h3>
+                <div class="specs">${v.year} • ${v.mileage} • ${v.transmission} • ${v.drive_type}</div>
+                ${v.customs_verified ? '<span class="badge duty-paid">Duty Paid ✅</span>' : ''}
+                <div class="price">₦${v.price.toLocaleString()}</div>
+                <a href="/vehicle/${v.id}" class="details-link">View Details</a>
+                <a href="https://wa.me/2348183533837?text=${encodeURIComponent(`I'm interested in ${v.title} (${v.year}) priced at ₦${v.price.toLocaleString()}. Listing ID: ${v.id}`)}" target="_blank" class="whatsapp-link" onclick="trackLead(${v.id})">Chat on WhatsApp</a>
             </div>
         `;
         grid.appendChild(card);
@@ -45,8 +44,8 @@ async function fetchVehicles() {
 // Brand filter
 document.querySelectorAll('.brand-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('bg-gold/20','text-gold','border-gold/30'));
-        btn.classList.add('bg-gold/20','text-gold','border-gold/30');
+        document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         currentBrand = btn.dataset.brand;
         fetchVehicles();
     });
@@ -61,6 +60,17 @@ document.querySelectorAll('.brand-btn').forEach(btn => {
 // Initial load
 if (document.getElementById('vehicleGrid')) fetchVehicles();
 
+// Lead tracking
+async function trackLead(vehicleId) {
+    try {
+        await fetch('/track-lead', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({vehicle_id: vehicleId, source: 'whatsapp'})
+        });
+    } catch(e) { console.error('Lead tracking failed', e); }
+}
+
 // Admin stats
 async function loadStats() {
     const res = await fetch('/admin/api/stats');
@@ -69,6 +79,7 @@ async function loadStats() {
     document.getElementById('statSale').textContent = stats.sale;
     document.getElementById('statRent').textContent = stats.rent;
     document.getElementById('statFeatured').textContent = stats.featured;
+    document.getElementById('statLeads').textContent = stats.leads;
 }
 if (document.getElementById('statTotal')) loadStats();
 
@@ -81,15 +92,14 @@ async function loadAdminTable() {
     tbody.innerHTML = '';
     vehicles.forEach(v => {
         const row = document.createElement('tr');
-        row.className = 'border-b border-white/10';
         row.innerHTML = `
-            <td class="px-4 py-3">${v.title}</td>
-            <td class="px-4 py-3">${v.brand}</td>
-            <td class="px-4 py-3">₦${v.price.toLocaleString()}</td>
-            <td class="px-4 py-3">${v.listing_type}</td>
-            <td class="px-4 py-3">
-                <a href="/admin/edit/${v.id}" class="text-blue-400 mr-2">Edit</a>
-                <button onclick="deleteVehicle(${v.id})" class="text-red-400">Delete</button>
+            <td>${v.title}</td>
+            <td>${v.brand}</td>
+            <td>₦${v.price.toLocaleString()}</td>
+            <td>${v.listing_type}</td>
+            <td>
+                <a href="/admin/edit/${v.id}">Edit</a>
+                <button onclick="deleteVehicle(${v.id})">Delete</button>
             </td>
         `;
         tbody.appendChild(row);
@@ -103,4 +113,24 @@ async function deleteVehicle(id) {
         loadAdminTable();
         loadStats();
     }
+}
+
+// Loan Calculator
+function showCalculator() {
+    document.getElementById('calculatorModal').classList.add('active');
+}
+function hideCalculator() {
+    document.getElementById('calculatorModal').classList.remove('active');
+}
+function calculateLoan(price) {
+    const down = parseFloat(document.getElementById('downPayment').value) || 0;
+    const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+    const term = parseFloat(document.getElementById('loanTerm').value) || 60;
+    const principal = price - down;
+    const monthlyRate = rate / 100 / 12;
+    const monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -term));
+    document.getElementById('loanResult').innerHTML = `
+        <p>Monthly Payment: ₦${monthlyPayment.toFixed(2)}</p>
+        <p>Total Payment: ₦${(monthlyPayment * term).toFixed(2)}</p>
+    `;
 }
