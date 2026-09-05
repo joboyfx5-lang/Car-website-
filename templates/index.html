@@ -1,103 +1,87 @@
 {% extends "base.html" %}
 {% block title %}AUTOSAT - Lagos Premier Auto Broker{% endblock %}
 {% block content %}
-<!-- Navbar -->
-<nav class="fixed w-full z-50 bg-[#0B0C10]/80 backdrop-blur-lg border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <a href="/" class="flex items-center">
-                <img src="https://i.postimg.cc/FFkqTd0m/IMG-0895.jpg" alt="AUTOSAT Logo" class="h-10 w-auto">
-                <span class="ml-2 text-xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">AUTOSAT</span>
-            </a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#featured" class="text-gray-300 hover:text-gold transition">Featured</a>
-                <a href="#inventory" class="text-gray-300 hover:text-gold transition">Inventory</a>
-                <a href="#contact" class="text-gray-300 hover:text-gold transition">Contact</a>
-            </div>
-            <a href="https://wa.me/2348183533837" target="_blank" class="bg-gold text-black px-4 py-2 rounded-full font-semibold">WhatsApp</a>
-        </div>
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="/" class="logo">
+            <img src="https://i.postimg.cc/FFkqTd0m/IMG-0895.jpg" alt="AUTOSAT Logo">
+            <span>AUTOSAT</span>
+        </a>
+        <nav class="main-nav">
+            <a href="#featured">Featured</a>
+            <a href="#inventory">Inventory</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <a href="https://wa.me/2348183533837" class="whatsapp-btn" target="_blank">
+            <i class="whatsapp-icon"></i> WhatsApp
+        </a>
     </div>
-</nav>
+</header>
 
-<!-- Hero -->
-<section class="pt-32 pb-16 px-4">
-    <div class="max-w-7xl mx-auto text-center">
-        <h1 class="text-4xl md:text-6xl font-bold leading-tight">Lagos' Premier Auto Broker</h1>
-        <p class="mt-4 text-gray-300 text-lg">We source luxury vehicles you can trust.</p>
-        <div class="mt-8 flex flex-wrap gap-4 justify-center">
-            <a href="#inventory" class="bg-gradient-to-r from-gold to-gold-light text-black px-8 py-3 rounded-full font-bold">Browse Inventory</a>
-            <a href="https://wa.me/2348183533837" target="_blank" class="bg-white/10 border border-white/20 px-8 py-3 rounded-full font-semibold">WhatsApp Us</a>
+<section class="hero">
+    <div class="container hero-content">
+        <h1>Lagos' Premier Auto Broker</h1>
+        <p>We source luxury vehicles you can trust.</p>
+        <div class="hero-buttons">
+            <a href="#inventory" class="btn btn-primary">Browse Inventory</a>
+            <a href="https://wa.me/2348183533837" class="btn btn-outline">WhatsApp Us</a>
         </div>
-        <div class="mt-4 text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i>24 Unity Rd, Ikeja, Lagos</div>
-    </div>
-</section>
-
-<!-- Brand Filter -->
-<section class="py-8 bg-white/5">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex flex-wrap gap-3 justify-center" id="brandFilter">
-            <button class="brand-btn bg-gold/20 text-gold px-5 py-2 rounded-full border border-gold/30" data-brand="All Brands">All Brands</button>
-            <button class="brand-btn bg-white/5 text-white px-5 py-2 rounded-full border border-white/10" data-brand="Lexus">Lexus</button>
-            <button class="brand-btn bg-white/5 text-white px-5 py-2 rounded-full border border-white/10" data-brand="Mercedes-Benz">Mercedes-Benz</button>
-            <button class="brand-btn bg-white/5 text-white px-5 py-2 rounded-full border border-white/10" data-brand="Toyota">Toyota</button>
-            <button class="brand-btn bg-white/5 text-white px-5 py-2 rounded-full border border-white/10" data-brand="BMW">BMW</button>
-            <button class="brand-btn bg-white/5 text-white px-5 py-2 rounded-full border border-white/10" data-brand="Land Rover">Land Rover</button>
+        <div class="location">
+            <span>📍 24 Unity Rd, Ikeja, Lagos</span>
         </div>
     </div>
 </section>
 
-<!-- Search & Filters -->
-<section class="py-8 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <input type="text" id="searchInput" placeholder="Search by keyword..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-        <select id="conditionFilter" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-            <option value="">Condition</option>
-            <option value="Brand New">Brand New</option>
-            <option value="Tokunbo">Tokunbo</option>
-            <option value="Nigerian Used">Nigerian Used</option>
-        </select>
-        <select id="listingTypeFilter" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-            <option value="">Listing Type</option>
-            <option value="Sale">For Sale</option>
-            <option value="Rent">For Rent</option>
-        </select>
-        <select id="bodyStyleFilter" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-            <option value="">Body Style</option>
-            <option value="Sedan">Sedan</option>
-            <option value="SUV">SUV</option>
-            <option value="Coupe">Coupe</option>
-        </select>
-        <select id="driveTypeFilter" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-black">
-            <option value="">Drive Type</option>
-            <option value="AWD">AWD</option>
-            <option value="RWD">RWD</option>
-            <option value="FWD">FWD</option>
-        </select>
-        <input type="number" id="minPrice" placeholder="Min Price (₦)" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
-        <input type="number" id="maxPrice" placeholder="Max Price (₦)" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white">
+<section class="brand-bar">
+    <div class="container brand-filter" id="brandFilter">
+        <button class="brand-btn active" data-brand="All Brands">All Brands</button>
+        <button class="brand-btn" data-brand="Lexus">Lexus</button>
+        <button class="brand-btn" data-brand="Mercedes-Benz">Mercedes-Benz</button>
+        <button class="brand-btn" data-brand="Toyota">Toyota</button>
+        <button class="brand-btn" data-brand="BMW">BMW</button>
+        <button class="brand-btn" data-brand="Land Rover">Land Rover</button>
     </div>
 </section>
 
-<!-- Inventory Grid -->
-<section id="inventory" class="py-8 px-4">
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-2xl font-bold mb-6">Available Vehicles</h2>
-        <div id="vehicleGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- dynamically populated -->
-        </div>
-    </div>
+<section class="search-filters container">
+    <input type="text" id="searchInput" placeholder="Search by keyword...">
+    <select id="conditionFilter">
+        <option value="">Condition</option>
+        <option value="Brand New">Brand New</option>
+        <option value="Tokunbo">Tokunbo</option>
+        <option value="Nigerian Used">Nigerian Used</option>
+    </select>
+    <select id="listingTypeFilter">
+        <option value="">Listing Type</option>
+        <option value="Sale">For Sale</option>
+        <option value="Rent">For Rent</option>
+    </select>
+    <select id="bodyStyleFilter">
+        <option value="">Body Style</option>
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+        <option value="Coupe">Coupe</option>
+    </select>
+    <select id="driveTypeFilter">
+        <option value="">Drive Type</option>
+        <option value="AWD">AWD</option>
+        <option value="RWD">RWD</option>
+        <option value="FWD">FWD</option>
+    </select>
+    <input type="number" id="minPrice" placeholder="Min Price (₦)">
+    <input type="number" id="maxPrice" placeholder="Max Price (₦)">
 </section>
 
-<!-- Footer -->
-<footer class="bg-black/50 py-8 mt-16">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        <img src="https://i.postimg.cc/FFkqTd0m/IMG-0895.jpg" alt="AUTOSAT" class="h-12 mx-auto mb-4">
-        <p class="text-gray-400">© 2026 AUTOSAT. All rights reserved.</p>
-        <div class="mt-4 flex justify-center space-x-6">
-            <a href="https://wa.me/2348183533837" target="_blank" class="text-gold">WhatsApp</a>
-            <span class="text-gray-500">|</span>
-            <span class="text-gray-400">24 Unity Rd, Ikeja, Lagos</span>
-        </div>
+<section id="inventory" class="inventory container">
+    <h2>Available Vehicles</h2>
+    <div id="vehicleGrid" class="vehicle-grid"></div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <img src="https://i.postimg.cc/FFkqTd0m/IMG-0895.jpg" alt="AUTOSAT">
+        <p>© 2026 AUTOSAT. All rights reserved.</p>
+        <p>24 Unity Rd, Ikeja, Lagos | <a href="https://wa.me/2348183533837">WhatsApp</a></p>
     </div>
 </footer>
 {% endblock %}
